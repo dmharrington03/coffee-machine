@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='uikit.min.css')}}" type="text/css">
+		<title>Coffee</title>
+</head>
+
+<body>
+	<div class="uk-flex uk-flex-middle" uk-flex uk-height-viewport>
+		<div class="uk-container uk-height-small">
+			<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle box" uk-flex>
+				<h1>Make a Fresh Cup</h1>
+				<div class="buttons uk-flex uk-flex-middle uk-flex-column uk-child-width-1-1">
+					<a href="/on" id="cntrl" class="uk-button uk-button-secondary">Turn on!<a/>
+					<a class="uk-button uk-button-default" href="" 
+						uk-toggle="target: #form">Set Alarm<a/>
+					<div id="form" hidden>
+							<form action="" class="form" method="POST" novalidate>
+									<span>{{ form.time }}</span>
+									<span>{{ form.submit(class='button') }}</span>
+							</form>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="{{ url_for('static', filename='uikit.min.js')}}"></script>
+</body>
+
+</html>
