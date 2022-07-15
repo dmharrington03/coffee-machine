@@ -4,25 +4,29 @@
 <head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}" type="text/css">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="{{ url_for('static', filename='uikit.min.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}" type="text/css">
 		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
 		<title>Coffee</title>
 </head>
 
 <body>
 	<div class="uk-flex uk-flex-middle" uk-flex uk-height-viewport>
-		<div class="uk-container uk-height-small">
+		<div class="uk-container">
 			<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle box" uk-flex>
-				<h1>Make a Fresh Cup</h1>
-				<div class="buttons uk-flex uk-flex-middle uk-flex-column uk-child-width-1-1">
-					<a href="/on" id="cntrl" class="uk-button uk-button-secondary">Turn on!<a/>
-					<a class="uk-button uk-button-default" href="" 
-						uk-toggle="target: #form">Set Alarm<a/>
-					<div id="form" hidden>
-							<form action="" class="form" method="POST" novalidate>
-									<span>{{ form.time }}</span>
-									<span>{{ form.submit(class='button') }}</span>
+				<h1>COFFEE MACHINE</h1>
+				<div class="buttons uk-flex uk-flex-middle uk-flex-column uk-height-expand uk-flex-around uk-child-width-expand">
+					<a href="/on" id="cntrl" class="button">BREW NOW<a/>
+					<a class="button" href="" 
+						uk-toggle="target: #form">SET TIME<a/>
+					<div id="form" class="" hidden>
+							<form action="" class="form uk-form-stacked" method="POST" novalidate>
+									<div class="uk-flex-middle uk-flex uk-flex-column" uk-flex>{{ form.time(class="time") }}</div>
+									<div class="uk-flex-middle uk-flex uk-flex-column" uk-flex>{{ form.submit(class='submit') }}</div>
 							</form>
 					</div>
 					
