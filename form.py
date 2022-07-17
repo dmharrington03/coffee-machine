@@ -5,6 +5,6 @@ from wtforms import SubmitField
 from wtforms_components import TimeField
 from wtforms.validators import DataRequired
 
-class AlarmForm(FlaskForm):
+class CoffeeForm(FlaskForm):
     time = TimeField('Alarm Time', [DataRequired()])
     submit = SubmitField('DONE')
