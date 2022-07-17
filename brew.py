@@ -1,9 +1,8 @@
 import sched, time
-import RPi.GPIO as GPIO
+# from gpiozero import OutputDevice
 
-def startBrew(pin):
-  GPIO.output(pin, GPIO.HIGH)
+# def startBrew(device: OutputDevice):
+#   device.on()
 
-
-def stopBrew(pin):
-  GPIO.output(pin, GPIO.LOW)
+# def stopBrew(device: OutputDevice):
+#   device.off()
