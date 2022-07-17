@@ -20,14 +20,13 @@
 		<div class="uk-container">
 			<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle box" uk-flex>
 				<div class="buttons uk-flex uk-flex-middle uk-flex-column uk-height-expand uk-flex-around uk-child-width-expand">
-					<a href="" id="cntrl" class="button">BREW NOW<a/>
-					<a class="button toggle" uk-toggle="target: #form" >SET TIME<a/>
+					<a href="/brew" class="button">BREW NOW<a/>
+					<a href="" class="button toggle" uk-toggle="target: #form" >SET TIME<a/>
 					<div id="form" hidden>
-							<form action="" class="form uk-form-stacked" method="POST" novalidate>
+							<form action="/" class="form uk-form-stacked" method="POST" novalidate>
 									<div class="uk-flex-middle uk-flex uk-flex-column" uk-flex>{{ form.time(class="time", value="00:00") }}
 									</div>
 									<div class="uk-flex-middle uk-flex uk-flex-column" uk-flex>{{ form.submit(class='submit') }}</div>
-
 							</form>
 					</div>
 					
