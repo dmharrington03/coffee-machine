@@ -1,18 +1,23 @@
-/* .hidden {
-  display: none;
-} */
-
-.box {
-  border: 1px solid darkseagreen;
-}
-
 body {
   height: 100%;
   font-family: 'Cormorant', Garamond, Georgia, 'Times New Roman', Times, serif;
+  background-color: #F3F9F4;
+  color: black;
+  font-size: 18px;
+  font-weight: initial;
 }
 
-h1 {
-  font-family: inherit;
+a {
+  color: inherit;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+a:visited, a:focus, a:focus-visible, a:focus-within {
+  color: inherit;
 }
 
 .buttons {
@@ -26,26 +31,17 @@ h1 {
   padding-left: 0px;
 }
 
-input[type="submit"] {
-  background-color: white;
+#form {
+  color: inherit;
   border: 1px solid black;
-  text-transform: uppercase;
-  padding: 2px 5px;
-}
-
-input[type="submit"]:hover {
-  color: black;
-  text-decoration: none;
-  outline: 0;
-}
-
-.form {
-  color: black;
+  border-radius: 5px;
+  margin-top: 20px;
 }
 
 .time, .submit{
   width: 100%;
-  border: 1px solid tan;
+  color: inherit;
+  font-size: inherit;
   background: #eee;
   border-radius: 5px;
   margin: 10px;
@@ -53,22 +49,68 @@ input[type="submit"]:hover {
   box-sizing: border-box;
 }
 
-.submit {
-  width: 100%;
-}
-
-.button {
-  margin: 5px;
-  border: 1px solid tan;
-  border-radius: 5px;
+input[type=time].time {
+  border: none;
+  text-decoration: underline;
+  padding: 20px 10px;
+  font-family: 'Courier New', Courier, monospace;
+  background: inherit;
   text-align: center;
-  padding: 10px 20px;
-  background: #eee;
-  text-decoration: none;
-  color: inherit;
 }
 
-.button:hover {
+.submit {
+  border: none;
+  padding: 2px 2px;
+  text-decoration: none;
+  font-weight: inherit;
+  transition: text-decoration 1s;
+}
+.submit:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.time:focus, .time:focus-visible, .time:focus-within {
+  outline: none;
+}
+
+.button, .submit {
+  font-family: inherit;
+  border-radius: 0;
+  background: inherit;
+  text-transform: uppercase;
+  margin: 10px;
+  border: none;
+  border-color: #F3F9F4;
+  text-align: center;
+  padding: 2px 5px;
   text-decoration: none;
   color: inherit;
+  transition: border-color .5s;
 }
+
+
+@media screen and (min-width: 640px) {
+  .button:hover {
+    text-decoration: none;
+    border-color: black;
+    border-bottom: 1px solid;
+    color: inherit;
+  }
+}
+
+@media screen and (max-width: 640px) {
+
+  .button, .submit {
+    text-decoration: underline;
+    border-color: black;
+    color: inherit;
+  }
+
+  .button:hover {
+    text-decoration: underline;
+    border: none;
+  }
+
+}
+  
