@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="{{ url_for('static', filename='uikit.min.css')}}" type="text/css">
 		<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}" type="text/css">
 		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+		<script defer src="{{ url_for('static', filename='uikit.min.js')}}"></script>
 
 		<title>Coffee</title>
 </head>
@@ -18,15 +19,15 @@
 	<div class="uk-flex uk-flex-middle" uk-flex uk-height-viewport>
 		<div class="uk-container">
 			<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle box" uk-flex>
-				<h1>COFFEE MACHINE</h1>
 				<div class="buttons uk-flex uk-flex-middle uk-flex-column uk-height-expand uk-flex-around uk-child-width-expand">
-					<a href="/on" id="cntrl" class="button">BREW NOW<a/>
-					<a class="button" href="" 
-						uk-toggle="target: #form">SET TIME<a/>
-					<div id="form" class="" hidden>
+					<a href="" id="cntrl" class="button">BREW NOW<a/>
+					<a class="button toggle" uk-toggle="target: #form" >SET TIME<a/>
+					<div id="form" hidden>
 							<form action="" class="form uk-form-stacked" method="POST" novalidate>
-									<div class="uk-flex-middle uk-flex uk-flex-column" uk-flex>{{ form.time(class="time") }}</div>
+									<div class="uk-flex-middle uk-flex uk-flex-column" uk-flex>{{ form.time(class="time", value="00:00") }}
+									</div>
 									<div class="uk-flex-middle uk-flex uk-flex-column" uk-flex>{{ form.submit(class='submit') }}</div>
+
 							</form>
 					</div>
 					
@@ -34,7 +35,6 @@
 			</div>
 		</div>
 	</div>
-	<script src="{{ url_for('static', filename='uikit.min.js')}}"></script>
 </body>
 
 </html>
