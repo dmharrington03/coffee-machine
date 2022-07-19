@@ -9,9 +9,9 @@
 		<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="{{ url_for('static', filename='uikit.min.css')}}" type="text/css">
 		<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}" type="text/css">
-		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 		<script defer src="{{ url_for('static', filename='uikit.min.js')}}"></script>
-
+		<script defer src="{{ url_for('static', filename='uikit-icons.min.js')}}"></script>
+		<script defer src="{{ url_for('static', filename='script.js')}}"></script>
 		<title>Coffee</title>
 </head>
 
@@ -20,9 +20,10 @@
 		<div class="uk-container">
 			<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle box" uk-flex>
 				<div class="buttons uk-flex uk-flex-middle uk-flex-column uk-height-expand uk-flex-around uk-child-width-expand">
-					<a href="" class="button">BREWING IN PROGRESS<a/>
-					<h2>Time Remaining: {{ remaining }}</h2>
-					
+					<h2 href="" class="heading">BREWING...<a/>
+					<div class="alarm">
+						<h2>TIME REMAINING: {{ remaining }}</h2>
+					</div>
 				</div>
 			</div>
 		</div>
