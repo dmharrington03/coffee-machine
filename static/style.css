@@ -20,6 +20,48 @@ a:visited, a:focus, a:focus-visible, a:focus-within {
   color: inherit;
 }
 
+h1, h2 {
+  font-size: 18px;
+  font-family: inherit;
+}
+
+.heading {
+  font-family: inherit;
+  text-transform: uppercase;
+  margin: 10px;
+  text-align: center;
+  padding: 2px 5px;
+  text-decoration: none;
+  color: inherit;
+}
+
+
+.alarm h2 {
+  margin: 20px 20px 5px 20px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.alarm {
+  text-transform: uppercase;
+  /* position: relative; */
+  margin: 10px;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #F3F9F4;
+  text-align: center;
+  /* padding: ; */
+  text-decoration: none;
+  color: inherit;
+}
+
+.close {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  top: 3px;
+  left: 5px;
+}
+
 .buttons {
   list-style-type: none;
   padding-left: 0px;
@@ -95,6 +137,7 @@ input[type=time].time {
     text-decoration: none;
     border-color: black;
     border-bottom: 1px solid;
+    cursor: pointer;
     color: inherit;
   }
 }
@@ -109,6 +152,7 @@ input[type=time].time {
 
   .button:hover {
     text-decoration: underline;
+    cursor: pointer;
     border: none;
   }
 
