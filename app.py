@@ -68,6 +68,18 @@ def index():
         if (brewTime.hour < datetime.now().hour) and (brewTime.minute < datetime.now().minute):
             brewTime += timedelta(days=1)
         
+        res = dbcur.execute("SELECT * FROM times").fetchall()
+        timeDiff = (datetime.now() - brewTime).total_seconds()
+        if res: # The user refreshes and the page POSTs the same alarm
+            if (timeDiff < BREW_SECS) and (timeDiff > 0): # Brewing in progress
+                return render_template('inProgress.html')
+            elif timeDiff >= BREW_SECS: # Brewing done
+                return render_template('index.html', form=form)
+            else: # Brewing not yet started
+                return render_template('alarm.html', time=brewTime.strftime('%I:%M %p'))
+
+        # else (the page is not a refresh)
+
         value = (int(round(brewTime.timestamp())),)
         dbcur.execute("INSERT INTO times (time) VALUES (?)", value)
         db.commit()
