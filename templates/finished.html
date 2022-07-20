@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="{{ url_for('static', filename='uikit.min.css')}}" type="text/css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='style.css')}}" type="text/css">
+		<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+		<script defer src="{{ url_for('static', filename='uikit.min.js')}}"></script>
+
+		<title>Coffee</title>
+</head>
+
+<body>
+	<div class="uk-flex uk-flex-middle" uk-flex uk-height-viewport>
+		<div class="uk-container">
+			<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle box" uk-flex>
+				<div class="buttons uk-flex uk-flex-middle uk-flex-column uk-height-expand uk-flex-around uk-child-width-expand">
+					<h2>BREWING FINISHED</h2>
+            <svg width="126" height="141" viewBox="0 0 126 141" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <line x1="86.6973" y1="132.91" x2="86.6973" y2="98.9102" stroke="black"/>
+              <path d="M119.197 132.91V98.9102" stroke="black"/>
+              <path d="M88.1973 133.91C88.5421 133.91 118.197 133.91 118.197 133.91" stroke="black"/>
+              <line y1="-0.5" x2="1.85983" y2="-0.5" transform="matrix(0.724459 0.689318 -0.724459 0.689318 87.1973 132.628)" stroke="black"/>
+              <line y1="-0.5" x2="1.85983" y2="-0.5" transform="matrix(0.724459 -0.689318 0.724459 0.689318 117.85 133.91)" stroke="black"/>
+              <rect x="87" y="112" width="32" height="22" fill="#3B2F2F"/>
+              <rect x="125.575" y="106.897" width="0.425201" height="17.9487" rx="0.212601" fill="black"/>
+              <line x1="119.197" y1="106.846" x2="126" y2="106.846" stroke="black"/>
+              <line x1="126" y1="124.897" x2="119.197" y2="124.897" stroke="black"/>
+              <line y1="-0.5" x2="44.144" y2="-0.5" transform="matrix(-0.684573 -0.728944 -0.684573 0.728944 30.2197 98.6338)" stroke="black"/>
+              <line y1="-0.5" x2="38.2277" y2="-0.5" transform="matrix(0.513453 -0.858118 -0.876083 -0.48216 30.2274 98.416)" stroke="black"/>
+              <line y1="-0.5" x2="44.8088" y2="-0.5" transform="matrix(0.819948 -0.572438 -0.45215 -0.891942 55.0801 59.5598)" stroke="black"/>
+              <line y1="-0.5" x2="45.7697" y2="-0.5" transform="matrix(0.524314 -0.851525 -0.866992 -0.498321 37.1533 40.3486)" stroke="black"/>
+              <line y1="-0.5" x2="37.4806" y2="-0.5" transform="matrix(0.850528 -0.52593 -0.387843 -0.921725 0.111938 66.019)" stroke="black"/>
+              <line y1="-0.5" x2="26.2478" y2="-0.5" transform="matrix(-0.684573 -0.728944 -0.684573 0.728944 55.3438 59.7058)" stroke="black"/>
+              <line y1="-0.5" x2="26.8443" y2="-0.5" transform="matrix(-0.684573 -0.728944 -0.684573 0.728944 49.8776 66.396)" stroke="black"/>
+              <rect x="-0.684573" width="22.8616" height="5.43595" transform="matrix(-0.684573 -0.728944 -0.684573 0.728944 52.8841 58.8584)" fill="#381B0B" fill-opacity="0.17" stroke="black"/>
+              <line y1="-0.5" x2="44.0871" y2="-0.5" transform="matrix(0.819948 -0.572438 -0.45215 -0.891942 52.3026 55.5601)" stroke="black"/>
+              <line y1="-0.5" x2="45.2038" y2="-0.5" transform="matrix(0.524314 -0.851525 -0.866992 -0.498321 40.6941 43.9961)" stroke="black"/>
+              <line y1="-0.5" x2="44.144" y2="-0.5" transform="matrix(-0.684573 -0.728944 -0.684573 0.728944 91.3314 34.4309)" stroke="black"/>
+              <line y1="-0.5" x2="38.2277" y2="-0.5" transform="matrix(0.513453 -0.858118 -0.876083 -0.48216 26.6504 94.6074)" stroke="black"/>
+              <line y1="-0.5" x2="37.4806" y2="-0.5" transform="matrix(0.850528 -0.52593 -0.387843 -0.921725 3.78723 69.9326)" stroke="black"/>
+              <line y1="-0.5" x2="8.35156" y2="-0.5" transform="matrix(-0.684573 -0.728944 -0.684573 0.728944 97.8655 41.3884)" stroke="black"/>
+              <line y1="-0.5" x2="11.4758" y2="-0.5" transform="matrix(-0.820262 0.571987 0.451514 0.892264 92.5565 35.7356)" stroke="black"/>
+              <line y1="-0.5" x2="14.8054" y2="-0.5" transform="matrix(-0.997948 0.0640305 -0.112326 0.993672 97.8655 41.3884)" stroke="black"/>
+              <path d="M98.6809 39.6504L62.1244 1.24526" stroke="black"/>
+              <path d="M96.9215 30.2185L69.4815 0.999928" stroke="black"/>
+              <path d="M69.5235 1.19559L62.2853 1.3549" stroke="black"/>
+              <path d="M98.5149 39.5002L96.8209 29.851" stroke="black"/>
+              <line y1="-0.5" x2="4.17578" y2="-0.5" transform="matrix(-0.684573 -0.728944 -0.684573 0.728944 83.24 14.347)" stroke="black"/>
+              <line y1="-0.5" x2="8.59032" y2="-0.5" transform="matrix(0.778433 -0.627728 -0.53189 -0.846813 82.9838 13.7616)" stroke="black"/>
+              <line y1="-0.5" x2="8.73761" y2="-0.5" transform="matrix(0.579581 -0.814915 -0.814548 -0.580095 80.3804 11.3043)" stroke="black"/>
+              <line y1="-0.5" x2="6.56194" y2="-0.5" transform="matrix(-0.684573 -0.728944 -0.684573 0.728944 89.9313 8.96143)" stroke="black"/>
+              <line y1="-0.5" x2="6.56194" y2="-0.5" transform="matrix(-0.684573 -0.728944 -0.684573 0.728944 58.5828 5.81494)" stroke="black"/>
+              <line y1="-0.5" x2="5.9654" y2="-0.5" transform="matrix(-0.684573 -0.728944 -0.684573 0.728944 57.033 8.33484)" stroke="black"/>
+              <line y1="-0.5" x2="7.21654" y2="-0.5" transform="matrix(-0.995399 0.0958107 -0.084588 0.996416 53.3086 4.47339)" stroke="black"/>
+              <line y1="-0.5" x2="9.48244" y2="-0.5" transform="matrix(-0.995399 0.0958107 -0.084588 0.996416 54.0416 1.08374)" stroke="black"/>
+              <line y1="-0.5" x2="0.601602" y2="-0.5" transform="matrix(-0.952382 -0.304907 -0.393251 0.919431 54.2948 1.2489)" stroke="black"/>
+              <line y1="-0.5" x2="0.609564" y2="-0.5" transform="matrix(-0.981742 -0.190218 -0.312155 0.950031 53.6025 4.578)" stroke="black"/>
+              <line y1="-0.5" x2="26.2882" y2="-0.5" transform="matrix(0.422137 -0.906532 -0.937884 -0.346949 35.1766 28.0955)" stroke="black"/>
+              <line y1="-0.5" x2="28.496" y2="-0.5" transform="matrix(0.40882 -0.912615 -0.94485 -0.327503 32.7433 27.2412)" stroke="black"/>
+              <line y1="-0.5" x2="3.22597" y2="-0.5" transform="matrix(-0.93645 -0.350802 -0.424767 0.905302 35.6876 28.4546)" stroke="black"/>
+              </svg>
+              
+					<a href="/" class="button">RETURN TO HOME<a/>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
