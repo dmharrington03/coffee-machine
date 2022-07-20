@@ -23,54 +23,96 @@ a:visited, a:focus, a:focus-visible, a:focus-within {
 h1, h2 {
   font-size: 18px;
   font-family: inherit;
+  text-align: center;
 }
 
 .heading {
   font-family: inherit;
   text-transform: uppercase;
-  margin: 10px;
-  text-align: center;
-  padding: 2px 5px;
+  text-align: left;
+  margin-bottom: 0px;
   text-decoration: none;
   color: inherit;
 }
 
+.alarm-heading {
+  font-family: inherit;
+  text-transform: uppercase;
+  margin: 10px;
+  padding: 2px 5px;
+  text-decoration: none;
+  color: inherit;
+}
 
 .alarm h2 {
   margin: 20px 20px 5px 20px;
   font-family: 'Courier New', Courier, monospace;
 }
 
+#progress {
+  background: #eee;
+  position: relative;
+  width: 100%;
+}
+
+#bar {
+  background: #403125;
+  height: 20px;
+  width: 0%;
+}
+
+#perc {
+  /* position: absolute; */
+  font-family: 'Courier New', Courier, monospace;
+  /* right: -30px;
+  top: 1px; */
+}
+
+.cancel {
+  font-family: inherit;
+  border-radius: 0;
+  background: inherit;
+  text-transform: uppercase;
+  margin: 10px 10px 10px 0;
+  border: none;
+  border-color: #F3F9F4;
+  text-align: left;
+  padding: 0;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color .5s;
+}
+
+
 .alarm {
   text-transform: uppercase;
-  /* position: relative; */
+  font-family: 'Courier New', Courier, monospace;
+  position: relative;
   margin: 10px;
+  padding: 5px 5px;
   border: 1px solid black;
   border-radius: 5px;
   background-color: #F3F9F4;
   text-align: center;
-  /* padding: ; */
   text-decoration: none;
   color: inherit;
 }
 
+.alarm-icon {
+  position: absolute;
+  top: 2px;
+  left: 3px;
+}
+
+.alarm a {
+  text-decoration: underline;
+}
 .close {
   position: absolute;
   padding: 0;
   margin: 0;
   top: 3px;
   left: 5px;
-}
-
-.buttons {
-  list-style-type: none;
-  padding-left: 0px;
-  margin-left: 0px;
-}
-
-.buttons li {
-  margin-left: 0px;
-  padding-left: 0px;
 }
 
 #form {
@@ -133,7 +175,7 @@ input[type=time].time {
 
 
 @media screen and (min-width: 640px) {
-  .button:hover {
+  .button:hover, .cancel:hover {
     text-decoration: none;
     border-color: black;
     border-bottom: 1px solid;
@@ -144,17 +186,29 @@ input[type=time].time {
 
 @media screen and (max-width: 640px) {
 
-  .button, .submit {
+  .button, .submit, .cancel {
     text-decoration: underline;
     border-color: black;
     color: inherit;
   }
 
-  .button:hover {
+  .button:hover, .cancel:hover {
     text-decoration: underline;
     cursor: pointer;
     border: none;
   }
 
+}
+
+path {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: dash 5s ease-in-out forwards;
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
   
