@@ -18,12 +18,14 @@
 <body>
 	<div class="uk-flex uk-flex-middle" uk-flex uk-height-viewport>
 		<div class="uk-container">
-			<div class="uk-flex uk-flex-center uk-flex-column uk-flex-middle box" uk-flex>
-				<div class="buttons uk-flex uk-flex-middle uk-flex-column uk-height-expand uk-flex-around uk-child-width-expand">
-					<h2 href="" class="heading">BREWING...<a/>
-					<div class="alarm">
-						<h2>TIME REMAINING: {{ remaining }}</h2>
+			<div class="uk-flex uk-flex-middle" uk-flex>
+				<div class="uk-flex uk-flex-column uk-width-medium" uk-flex>
+					<h2 href="" class="heading" style="margin-bottom: 10px;">BREWING...</h2>
+					<div id="progress">
+						<div id="bar"></div>
 					</div>
+					<div id="perc">&nbsp;</div>
+					<a href="/delete" class="cancel uk-width-max-content">CANCEL</a>
 				</div>
 			</div>
 		</div>
