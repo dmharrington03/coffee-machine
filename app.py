@@ -5,16 +5,22 @@ from form import CoffeeForm
 import sched, threading, time
 from datetime import date, timedelta, datetime
 import sqlite3
-# from gpiozero import OutputDevice
-# import brew
+import RPi.GPIO as GPIO
+import atexit, os
+from brew import startBrew, stopBrew
 
-pin = 18
+pin = 4
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(pin, GPIO.OUT)
+GPIO.output(pin, GPIO.HIGH)
+
+atexit.register(GPIO.cleanup)
 
 # Initiate scheduler
 timeScheduler = sched.scheduler(time.time, time.sleep)
 
 # relay = OutputDevice(pin)
-BREW_SECS = 1 * 60 # 5 minutes
+BREW_SECS = 330 # 5.5 minutes
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'you-will-never-guess'
@@ -22,7 +28,7 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 @app.route('/', methods=('GET', 'POST'))
 def index():
 
-    db = sqlite3.connect("./times.db")
+    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
     dbcur = db.cursor()
     res = dbcur.execute("SELECT * FROM times").fetchall()
     try:
@@ -83,7 +89,7 @@ def index():
         value = (int(round(brewTime.timestamp())),)
         dbcur.execute("INSERT INTO times (time) VALUES (?)", value)
         db.commit()
-        timeScheduler.enterabs(time.mktime(brewTime.timetuple()), priority=1, action=print, argument=(brewTime,))
+        timeScheduler.enterabs(time.mktime(brewTime.timetuple()), priority=1, action=startBrew, argument=(pin, BREW_SECS))
         startThread = threading.Thread(target=timeScheduler.run)
         startThread.start()
 
@@ -94,7 +100,7 @@ def index():
 
 @app.route('/brew')
 def brew():
-    db = sqlite3.connect("./times.db")
+    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
     dbcur = db.cursor()
     dbcur.execute("DELETE FROM times")
     value = (int(math.floor(time.time())),)
@@ -102,7 +108,9 @@ def brew():
     db.commit()
     db.close()
     form = CoffeeForm()
-    # Call brew()
+    startThread = threading.Thread(target=startBrew, args=(pin, BREW_SECS))
+    startThread.start()
+
     return redirect("/")
 
 @app.route('/finished')
@@ -111,17 +119,18 @@ def finished():
 
 @app.route('/delete')
 def delete():
-    db = sqlite3.connect("./times.db")
+    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
     dbcur = db.cursor()
     dbcur.execute("DELETE FROM times")
     db.commit()
     db.close()
+    stopBrew(pin)
     return redirect("/")
         
 
 @app.route('/progress')
 def progress():
-    db = sqlite3.connect("./times.db")
+    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
     dbcur = db.cursor()
     res = dbcur.execute("SELECT * FROM times").fetchall()[0][0]
     db.close()
