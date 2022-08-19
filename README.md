@@ -8,6 +8,6 @@ The machine uses a Raspberry Pi 3 hosting a web server for user interaction, whi
 
 The backend of the server is built in Python with Flask/WTForms/SQLite, and the frontend is rendered through Flask Jinja templates with the UIKit CSS framework and vanilla JavaScript.
 
-A time is input via a time selector form element then passed to the backend. There, it is processed and stored in an SQL database.
+A time is input via a time selector form element then passed to the backend. There, it is processed and stored in an SQL database. A scheduler is initiated to turn on the Raspberry Pi GPIO pin attached to the relay controlling the hot plate. The frontend can then query the API about the stored time and render a progress bar and various other pages.
 
 <img src="./img/screens.jpeg" alt="Five screens of frontend interface" width=800>
