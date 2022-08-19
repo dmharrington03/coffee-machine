@@ -5,16 +5,16 @@ from form import CoffeeForm
 import sched, threading, time
 from datetime import date, timedelta, datetime
 import sqlite3
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 import atexit, os
 from brew import startBrew, stopBrew
 
 pin = 4
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(pin, GPIO.OUT)
-GPIO.output(pin, GPIO.HIGH)
+# GPIO.setmode(GPIO.BCM)
+# GPIO.setup(pin, GPIO.OUT)
+# GPIO.output(pin, GPIO.HIGH)
 
-atexit.register(GPIO.cleanup)
+# atexit.register(GPIO.cleanup)
 
 # Initiate scheduler
 timeScheduler = sched.scheduler(time.time, time.sleep)
@@ -28,7 +28,7 @@ app.config['SECRET_KEY'] = 'you-will-never-guess'
 @app.route('/', methods=('GET', 'POST'))
 def index():
 
-    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
+    db = sqlite3.connect('./times.db')
     dbcur = db.cursor()
     res = dbcur.execute("SELECT * FROM times").fetchall()
     try:
@@ -100,7 +100,7 @@ def index():
 
 @app.route('/brew')
 def brew():
-    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
+    db = sqlite3.connect('./times.db')
     dbcur = db.cursor()
     dbcur.execute("DELETE FROM times")
     value = (int(math.floor(time.time())),)
@@ -119,7 +119,7 @@ def finished():
 
 @app.route('/delete')
 def delete():
-    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
+    db = sqlite3.connect('./times.db')
     dbcur = db.cursor()
     dbcur.execute("DELETE FROM times")
     db.commit()
@@ -130,7 +130,7 @@ def delete():
 
 @app.route('/progress')
 def progress():
-    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
+    db = sqlite3.connect('./times.db')
     dbcur = db.cursor()
     res = dbcur.execute("SELECT * FROM times").fetchall()[0][0]
     db.close()

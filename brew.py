@@ -1,11 +1,13 @@
 import sched, time
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 
 def startBrew(pin, secs):
-  GPIO.output(pin, GPIO.HIGH)
-  time.sleep(secs)
-  GPIO.output(pin, GPIO.LOW)
+#   GPIO.output(pin, GPIO.HIGH)
+#   time.sleep(secs)
+#   GPIO.output(pin, GPIO.LOW)
+    pass
 
 
 def stopBrew(pin):
-  GPIO.output(pin, GPIO.LOW)
+#   GPIO.output(pin, GPIO.LOW)
+    pass
