@@ -52,7 +52,6 @@ def index():
         # If there is a stored time
         if res:
 
-            print(f"Stored time {res}")
             brewTime = datetime.fromtimestamp(res)
 
             timeDiff = (datetime.now() - brewTime).total_seconds()
@@ -101,11 +100,12 @@ def index():
         db.commit()
 
         scheduler.remove_all_jobs()
-        if scheduler.running:
-            scheduler.shutdown()
+        # if scheduler.running:
+        #     scheduler.shutdown()
         
         scheduledJob = scheduler.add_job(startBrew, 'date', run_date=datetime.fromtimestamp(time.mktime(brewTime.timetuple())), args=(pin, BREW_SECS, stopState))
-        scheduler.start()
+        if not scheduler.running:
+            scheduler.start()
 
         timeDiff = brewTime - datetime.now()
 
@@ -130,12 +130,11 @@ def brew():
         stopBrewing = True
         time.sleep(2)
         stopBrewing = False
-    if scheduler.running:
-            scheduler.shutdown()
 
     instantStartJob = scheduler.add_job(startBrew, 'date', run_date=datetime.now(), args=(pin, BREW_SECS, stopState))
-    scheduler.start()
 
+    if not scheduler.running:
+        scheduler.start()
     return redirect("/")
 
 @app.route('/finished')
@@ -154,8 +153,8 @@ def delete():
     # Kill any brew processes running
     if scheduler.get_jobs():
         scheduler.remove_all_jobs()
-    if scheduler.running:
-            scheduler.shutdown()
+    # if scheduler.running:
+    #         scheduler.shutdown()
     
     stopBrewing = True
     time.sleep(2)
@@ -167,13 +166,19 @@ def delete():
 def progress():
     db = sqlite3.connect('./times.db')
     dbcur = db.cursor()
-    res = dbcur.execute("SELECT * FROM times").fetchall()[0][0]
+    # If client queries after time is already deleted
+    try:
+        res = dbcur.execute("SELECT * FROM times").fetchall()[0][0]
+        timeDiff = (datetime.now() - datetime.fromtimestamp(res)).total_seconds()
+        if (timeDiff < BREW_SECS) and (timeDiff > 0): # If brewing in progress, should always be called
+            return str(math.floor(timeDiff)) # Seconds elapsed
+        else: # Alarm not yet gone off, should never be called
+            return ""
+    except IndexError:
+        print("index error when querying progress API")
+
     db.close()
-    timeDiff = (datetime.now() - datetime.fromtimestamp(res)).total_seconds()
-    if (timeDiff < BREW_SECS) and (timeDiff > 0): # If brewing in progress, should always be called
-        return str(math.floor(timeDiff)) # Seconds elapsed
-    else: # Alarm not yet gone off, should never be called
-        return ""
+    return ""
 
 
 
