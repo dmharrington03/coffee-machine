@@ -1,8 +1,11 @@
+from doctest import run_docstring_examples
 import math
+import sched
 from flask import Flask, render_template, redirect, url_for, request
 # from requests import request
 from form import CoffeeForm
-import sched, threading, time
+import time
+from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import date, timedelta, datetime
 import sqlite3
 # import RPi.GPIO as GPIO
@@ -16,14 +19,21 @@ pin = 4
 
 # atexit.register(GPIO.cleanup)
 
-# Initiate scheduler
-timeScheduler = sched.scheduler(time.time, time.sleep)
+scheduler = BackgroundScheduler()
+stopBrewing = False
+
+# Initialize processes
+# instantStartProcess = mp.Process()
+# scheduledStartProcess = mp.Process()
 
 # relay = OutputDevice(pin)
-BREW_SECS = 330 # 5.5 minutes
+BREW_SECS = 10 # 5.5 minutes
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'you-will-never-guess'
+
+def stopState():
+    return stopBrewing
 
 @app.route('/', methods=('GET', 'POST'))
 def index():
@@ -89,15 +99,20 @@ def index():
         value = (int(round(brewTime.timestamp())),)
         dbcur.execute("INSERT INTO times (time) VALUES (?)", value)
         db.commit()
-        timeScheduler.enterabs(time.mktime(brewTime.timetuple()), priority=1, action=startBrew, argument=(pin, BREW_SECS))
-        startThread = threading.Thread(target=timeScheduler.run)
-        startThread.start()
+
+        scheduler.remove_all_jobs()
+        if scheduler.running:
+            scheduler.shutdown()
+        
+        scheduledJob = scheduler.add_job(startBrew, 'date', run_date=datetime.fromtimestamp(time.mktime(brewTime.timetuple())), args=(pin, BREW_SECS, stopState))
+        scheduler.start()
 
         timeDiff = brewTime - datetime.now()
 
         return render_template('alarm.html', time=brewTime.strftime('%I:%M %p'))
 
 
+# 'Brew now' button pressed
 @app.route('/brew')
 def brew():
     db = sqlite3.connect('./times.db')
@@ -108,8 +123,18 @@ def brew():
     db.commit()
     db.close()
     form = CoffeeForm()
-    startThread = threading.Thread(target=startBrew, args=(pin, BREW_SECS))
-    startThread.start()
+
+    # Remove any scheduled start processes and tell running functions to stop
+    if scheduler.get_jobs():
+        scheduler.remove_all_jobs()
+        stopBrewing = True
+        time.sleep(2)
+        stopBrewing = False
+    if scheduler.running:
+            scheduler.shutdown()
+
+    instantStartJob = scheduler.add_job(startBrew, 'date', run_date=datetime.now(), args=(pin, BREW_SECS, stopState))
+    scheduler.start()
 
     return redirect("/")
 
@@ -125,8 +150,18 @@ def delete():
     db.commit()
     db.close()
     stopBrew(pin)
+
+    # Kill any brew processes running
+    if scheduler.get_jobs():
+        scheduler.remove_all_jobs()
+    if scheduler.running:
+            scheduler.shutdown()
+    
+    stopBrewing = True
+    time.sleep(2)
+    stopBrewing = False
+
     return redirect("/")
-        
 
 @app.route('/progress')
 def progress():
@@ -139,15 +174,6 @@ def progress():
         return str(math.floor(timeDiff)) # Seconds elapsed
     else: # Alarm not yet gone off, should never be called
         return ""
-
-
-
-@app.route('/stop')
-def stop():
-    form = CoffeeForm()
-    return render_template('index.html', form=form)
-
-
 
 
 
