@@ -1,5 +1,4 @@
 import math
-import sched
 from flask import Flask, render_template, redirect, url_for, request
 from form import CoffeeForm
 import time
@@ -21,7 +20,6 @@ scheduler = BackgroundScheduler()
 stopBrewing = False
 
 
-relay = OutputDevice(pin)
 BREW_SECS = 330 # 5.5 minutes
 
 app = Flask(__name__)
