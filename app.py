@@ -14,7 +14,11 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(pin, GPIO.OUT)
 GPIO.output(pin, GPIO.HIGH)
 
-atexit.register(GPIO.cleanup)
+@atexit.register
+def exitFunc():
+    print("exiting program...")
+    stopBrew()
+    GPIO.cleanup
 
 scheduler = BackgroundScheduler()
 stopBrewing = False
