@@ -31,7 +31,7 @@ def stopState():
 @app.route('/', methods=('GET', 'POST'))
 def index():
 
-    db = sqlite3.connect('./times.db')
+    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
     dbcur = db.cursor()
     res = dbcur.execute("SELECT * FROM times").fetchall()
     try:
@@ -56,7 +56,7 @@ def index():
 
             timeDiff = (datetime.now() - brewTime).total_seconds()
             # Done Brewing
-            if timeDiff>= BREW_SECS:
+            if timeDiff >= BREW_SECS:
                 dbcur.execute("DELETE FROM times")
                 db.commit()
                 # Return DONE BREWING
@@ -120,7 +120,7 @@ def index():
 # 'Brew now' button pressed
 @app.route('/brew')
 def brew():
-    db = sqlite3.connect('./times.db')
+    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
     dbcur = db.cursor()
     dbcur.execute("DELETE FROM times")
     value = (int(math.floor(time.time())),)
@@ -148,7 +148,7 @@ def finished():
 
 @app.route('/delete')
 def delete():
-    db = sqlite3.connect('./times.db')
+    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
     dbcur = db.cursor()
     dbcur.execute("DELETE FROM times")
     db.commit()
@@ -167,7 +167,7 @@ def delete():
 
 @app.route('/progress')
 def progress():
-    db = sqlite3.connect('./times.db')
+    db = sqlite3.connect(os.path.abspath('/home/raspberry/Documents/coffee-machine/times.db'))
     dbcur = db.cursor()
 
     # If client queries after time is already deleted
