@@ -1,33 +1,28 @@
-from doctest import run_docstring_examples
 import math
 import sched
 from flask import Flask, render_template, redirect, url_for, request
-# from requests import request
 from form import CoffeeForm
 import time
 from apscheduler.schedulers.background import BackgroundScheduler
 from datetime import date, timedelta, datetime
 import sqlite3
-# import RPi.GPIO as GPIO
+import RPi.GPIO as GPIO
 import atexit, os
 from brew import startBrew, stopBrew
 
 pin = 4
-# GPIO.setmode(GPIO.BCM)
-# GPIO.setup(pin, GPIO.OUT)
-# GPIO.output(pin, GPIO.HIGH)
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(pin, GPIO.OUT)
+GPIO.output(pin, GPIO.HIGH)
 
-# atexit.register(GPIO.cleanup)
+atexit.register(GPIO.cleanup)
 
 scheduler = BackgroundScheduler()
 stopBrewing = False
 
-# Initialize processes
-# instantStartProcess = mp.Process()
-# scheduledStartProcess = mp.Process()
 
-# relay = OutputDevice(pin)
-BREW_SECS = 10 # 5.5 minutes
+relay = OutputDevice(pin)
+BREW_SECS = 330 # 5.5 minutes
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'you-will-never-guess'
@@ -95,16 +90,6 @@ def index():
             day = "Today"
         
 
-        # Check if time should be for the next day
-        # if (brewTime.hour <= datetime.now().hour) and (brewTime.minute < datetime.now().minute):
-        #     brewTime += timedelta(days=1)
-        
-        # 7:20am = 07:20
-        # 3pm = 15:00
-        # 9pm = 21:00
-        # 9:06pm = 21:06
-        
-        
         res = dbcur.execute("SELECT * FROM times").fetchall()
         timeDiff = (datetime.now() - brewTime).total_seconds()
         if res: # The user refreshes and the page POSTs the same alarm
@@ -122,8 +107,6 @@ def index():
         db.commit()
 
         scheduler.remove_all_jobs()
-        # if scheduler.running:
-        #     scheduler.shutdown()
         
         scheduledJob = scheduler.add_job(startBrew, 'date', run_date=datetime.fromtimestamp(time.mktime(brewTime.timetuple())), args=(pin, BREW_SECS, stopState))
         if not scheduler.running:
@@ -177,8 +160,6 @@ def delete():
     # Kill any brew processes running
     if scheduler.get_jobs():
         scheduler.remove_all_jobs()
-    # if scheduler.running:
-    #         scheduler.shutdown()
     
     stopBrewing = True
     time.sleep(2)
@@ -190,6 +171,7 @@ def delete():
 def progress():
     db = sqlite3.connect('./times.db')
     dbcur = db.cursor()
+
     # If client queries after time is already deleted
     try:
         res = dbcur.execute("SELECT * FROM times").fetchall()[0][0]
@@ -198,6 +180,7 @@ def progress():
             return str(math.floor(timeDiff)) # Seconds elapsed
         else: # Alarm not yet gone off, should never be called
             return ""
+
     except IndexError:
         print("index error when querying progress API")
 
