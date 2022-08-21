@@ -45,6 +45,8 @@ def index():
         res = res[0][0]
     except:
         res = None
+    
+    day = ""
 
     form = CoffeeForm()
     if request.method == 'GET':
@@ -53,6 +55,11 @@ def index():
         if res:
 
             brewTime = datetime.fromtimestamp(res)
+            if brewTime.time() < datetime.now().time():
+                day = "Tomorrow"
+            else: 
+                day = "Today"
+        
 
             timeDiff = (datetime.now() - brewTime).total_seconds()
             # Done Brewing
@@ -69,7 +76,7 @@ def index():
             # Brewing not in Progress
             else:
                 # Show listed alarm
-                return render_template('alarm.html', time=brewTime.strftime('%I:%M %p'))
+                return render_template('alarm.html', time=brewTime.strftime('%I:%M %p'), day=day)
 
         return render_template('index.html', form=form)
 
@@ -79,9 +86,24 @@ def index():
         currentTime = datetime.now()
         brewTime = datetime.combine(currentTime.date(), inputTime)
 
-        # Check if time should be for the next day
-        if (brewTime.hour < datetime.now().hour) and (brewTime.minute < datetime.now().minute):
+
+        # Check if the inputted time is earlier than the current time
+        if inputTime < currentTime.time():
             brewTime += timedelta(days=1)
+            day = "Tomorrow"
+        else: 
+            day = "Today"
+        
+
+        # Check if time should be for the next day
+        # if (brewTime.hour <= datetime.now().hour) and (brewTime.minute < datetime.now().minute):
+        #     brewTime += timedelta(days=1)
+        
+        # 7:20am = 07:20
+        # 3pm = 15:00
+        # 9pm = 21:00
+        # 9:06pm = 21:06
+        
         
         res = dbcur.execute("SELECT * FROM times").fetchall()
         timeDiff = (datetime.now() - brewTime).total_seconds()
@@ -91,7 +113,7 @@ def index():
             elif timeDiff >= BREW_SECS: # Brewing done
                 return render_template('index.html', form=form)
             else: # Brewing not yet started
-                return render_template('alarm.html', time=brewTime.strftime('%I:%M %p'))
+                return render_template('alarm.html', time=brewTime.strftime('%I:%M %p'), day=day)
 
         # else (the page is not a refresh)
 
@@ -107,9 +129,11 @@ def index():
         if not scheduler.running:
             scheduler.start()
 
+        print(f'Alarm set for {str(brewTime)}')
+
         timeDiff = brewTime - datetime.now()
 
-        return render_template('alarm.html', time=brewTime.strftime('%I:%M %p'))
+        return render_template('alarm.html', time=brewTime.strftime('%I:%M %p'), day=day)
 
 
 # 'Brew now' button pressed
