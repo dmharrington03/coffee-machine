@@ -12,7 +12,7 @@ from brew import startBrew, stopBrew
 pin = 4
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(pin, GPIO.OUT)
-GPIO.output(pin, GPIO.HIGH)
+GPIO.output(pin, GPIO.LOW)
 
 @atexit.register
 def exitFunc():
